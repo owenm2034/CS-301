@@ -1,45 +1,70 @@
 \documentclass{article}
-\usepackage{fancyhdr}
+\begin{document}
 
-\title{CS 301 Assignment 2}
+\title{CS 301 Assignment 2\\[0.5cm]\large Student ID: 200482797}
 \author{Owen Monus}
-\date {March 4th, 2024}
+\date{March 4th, 2024}
 
-\fancyhead[R]{200482797}
-
-\begin {Document}
 \maketitle
-  
+
 \begin{enumerate}
-\item Consider two different machines, with two different instruction sets, both of which have a
-clock rate of 200 MHz. The following measurements are recorded on the two machines running a given
-set of programs.
+    \item Consider two different machines, with two different instruction sets, both of which have a
+    clock rate of 200 MHz. The following measurements are recorded on the two machines running a given
+    set of programs. Determine the effective CPI, MIPS rate, and execution time for each machine.
+        
+    \begin{table}[htbp]
+        \centering
+        \renewcommand{\arraystretch}{2}
+        \caption{Equations for Machines \(A\) and \(B\)}
+        \label{tab:equations}
+        \begin{tabular}{cc}
+            \hline
+            Machine \(A\) & Machine \(B\) \\
+            \hline
+            \( CPI = \frac{\sum_{i=1}^{n}{CPI_i \times I_i}}{{n}} \) & 
+            \( CPI = \frac{\sum_{i=1}^{n}{CPI_i \times I_i}}{{n}} \) \\
+            \( CPI = \frac{8 \times 1 + 4 \times 3 + 2 \times 4 + 4 \times 3}{18} \) & 
+            \( CPI = \frac{10 \times 1 + 8 \times 2 + 2 \times 4 + 4 \times 3}{24} \) \\
+            \( CPI = \frac{40}{18} \approx 2.22 \) & \( CPI = \frac{46}{24} \approx 1.92\) \\
+            \hline
+            \( MIPS = \frac{f \times 10^6}{CPI \times 10^6} \) & 
+            \( MIPS = \frac{f \times 10^6}{CPI \times 10^6} \) \\
+            \( MIPS = \frac{200 \times 10^6}{2.22 \times 10^6} \) & 
+            \( MIPS = \frac{200 \times 10^6}{1.92 \times 10^6} \) \\ %come back and fix these calcs
+            \hline
+            \( T = CPI \times \frac{1}{f} \times I_c \) & 
+            \( T = CPI \times \frac{1}{f} \times I_c \) \\
+            \( T = 2.22 \times \frac{1}{200 \times 10^6} \times 18,000,000 \) & 
+            \( T = 1.92 \times \frac{1}{200 \times 10^6} \times 24,000,000 \) \\
+            % \( T = 1998000 \) & 
+            \( T = 0.1998\) \\
+        \end{tabular}
+    \end{table}
 
-\begin{table}[htbp]
-    \centering
-    \caption{Instruction Comparison}
-      \begin{tabular}{lrrr}
-      \toprule
-            & \textbf{Instruction Type} & \textbf{Instruction Count (millions)} & \textbf{Cycles per Instruction} \\
-      \midrule
-      \textbf{Machine A} &       &       &  \\
-            & Arithmetic and logic & 8     & 1 \\
-            & Load and store & 4     & 3 \\
-            & Branch  & 2     & 4 \\
-            & Others  & 4     & 3 \\
-      \textbf{Machine B} &       &       &  \\
-            & Arithmetic and logic & 10    & 1 \\
-            & Load and store & 8     & 2 \\
-            & Branch  & 2     & 4 \\
-            & Others  & 4     & 3 \\
-      \bottomrule
-      \end{tabular}%
-    \label{tab:comparison}%
-  \end{table}%
+    \pagebreak
+    \item Consider the following code:
+    \begin{verbatim}
+for (i = 0; i < 20; i++)
+    for (j = 0; j < 10; j++)
+        a[i] = a[i] * j
+    \end{verbatim}
+    \begin{enumerate}
+        \item Give one example of the spatial locality in the code. 
+        \newline An example of spatial locality in this code can be seen in the array $a$. 
+        The data in $a$ is stored linearly and accessed sequentially.
+        \item Give one example of the temporal locality in the code.
+        \newline An example of temporal locality in this code can be seen in the line that modifies $a$.
+        This line of code is repetitively accessed in the for loops, lending temporal locality to the instruction
+        and the data accessed in the array $a$
+    \end{enumerate}
 
-Determine the effective CPI, MIPS rate, and execution time for each machine.
+    \item What do you mean by CPI, average CPI, and MIPS? Derive the formula for MIPS, in terms
+    of clock frequency and average CPI.
+    \newline 
+    
+\end{enumerate}
 
-- MIPS = f / (CPI x 10<sup>6</sup>)
-  - CPI = ∑ i
-- ∑ (CPI<sub>i</sub> * I<sub>i</sub>) / I<sub>c</sub>
-\end {Document}
+
+
+
+\end{document}

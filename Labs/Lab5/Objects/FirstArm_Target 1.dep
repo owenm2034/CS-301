@@ -1,0 +1,2 @@
+Dependencies for Project 'FirstArm', Target 'Target 1': (DO NOT MODIFY !)
+F (.\MyFirstARM.s)(0x65E1185F)(--cpu Cortex-M3 --pd "__EVAL SETA 1" -g --apcs=interwork -I\\Mac\Home\Documents\GitHub\CS-301\Labs\Lab5\RTE-IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include--pd "__UVISION_VERSION SETA 521" --pd "STM32F10X_MD_VL SETA 1"--list .\listings\myfirstarm.lst --xref -o .\objects\myfirstarm.o --depend .\objects\myfirstarm.d)

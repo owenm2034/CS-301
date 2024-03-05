@@ -1,0 +1,146 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         ;The semicolon is used to lead an inline documentation.
+    3 00000000         ;This is the first ARM Assembly language program you see
+                        in the lab.
+    4 00000000         ;This program skeleton was from Dave Duguid and Trevor D
+                       ouglas in summer 2013.
+    5 00000000         ;When you write your program, you could have your info a
+                       t the top document block.
+    6 00000000         ;For Example:  Your Name, Student Number, what the progr
+                       am is for, and what it does etc.
+    7 00000000         
+    8 00000000         ;;; Directives
+    9 00000000                 PRESERVE8
+   10 00000000                 THUMB
+   11 00000000         
+   12 00000000         ; Vector Table Mapped to Address 0 at Reset
+   13 00000000         ; Linker requires __Vectors to be exported
+   14 00000000         
+   15 00000000                 AREA             RESET, DATA, READONLY
+   16 00000000                 EXPORT           __Vectors
+   17 00000000         
+   18 00000000         __Vectors
+   19 00000000 20001000        DCD              0x20001000  ; stack pointer val
+                                                            ue when stack is em
+                                                            pty
+   20 00000004         ;The processor uses a full descending stack. 
+   21 00000004         ;This means the stack pointer holds the address of the l
+                       ast 
+   22 00000004         ;stacked item in memory. When the processor pushes a new
+                        item 
+   23 00000004         ;onto the stack, it decrements the stack pointer and the
+                       n 
+   24 00000004         ;writes the item to the new memory location.
+   25 00000004         
+   26 00000004 00000000        DCD              Reset_Handler ; reset vector
+   27 00000008         
+   28 00000008                 ALIGN
+   29 00000008         
+   30 00000008         ; The program
+   31 00000008         ; Linker requires Reset_Handler
+   32 00000008         
+   33 00000008                 AREA             MYCODE, CODE, READONLY
+   34 00000000         
+   35 00000000                 ENTRY
+   36 00000000                 EXPORT           Reset_Handler
+   37 00000000         
+   38 00000000         
+   39 00000000         Reset_Handler
+   40 00000000         ;;;;;;;;;;User Code Starts from the next line;;;;;;;;;;;
+                       ;
+   41 00000000         
+   42 00000000 F04F 0046       MOV              R0, #70     ; Load constant 70 
+                                                            into R0
+   43 00000004 F04F 0209       MOV              R2, #9      ; Load constant 9 i
+                                                            nto R2
+   44 00000008         
+   45 00000008         ; F to C first - C = 5 * (F - 32) / 9
+   46 00000008 F1A0 0120       SUB              R1, R0, #32 ; subtract 32 from 
+                                                            the current F value
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+                                                            , store in R1
+   47 0000000C F04F 0409       MOV              R4, #9
+   48 00000010 FB91 F1F4       SDIV             R1, R1, R4  ; divide difference
+                                                             by 9, store in R1
+   49 00000014 F04F 0405       MOV              R4, #5
+   50 00000018 FB01 F104       MUL              R1, R1, R4  ; multiply quotient
+                                                             by 5
+   51 0000001C         
+   52 0000001C         ; C to F second - F = (9 * C / 5) + 32
+   53 0000001C F04F 0409       MOV              R4, #9
+   54 00000020 FB02 F304       MUL              R3, R2, R4  ; multiply by 9, st
+                                                            ore in R3
+   55 00000024 F04F 0405       MOV              R4, #5
+   56 00000028 FB93 F3F4       SDIV             R3, R3, R4  ; divide product by
+                                                             5, store in R3
+   57 0000002C F103 0320       ADD              R3, R3, #32 ; add 32 to quotien
+                                                            t, store in R3
+   58 00000030         
+   59 00000030         
+   60 00000030                 END                          ;End of the program
+                                                            
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\convertf2candc2f.d -o.\objects\convertf2candc2f.o -I\\Ma
+c\Home\Documents\GitHub\CS-301\Labs\Lab6\RTE -IC:\Keil_v5\ARM\PACK\Keil\STM32F1
+xx_DFP\2.1.0\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__EVAL 
+SETA 1" --predefine="__UVISION_VERSION SETA 521" --predefine="STM32F10X_MD_VL S
+ETA 1" --list=.\listings\convertf2candc2f.lst convertF2CandC2F.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 15 in file convertF2CandC2F.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 18 in file convertF2CandC2F.s
+   Uses
+      At line 16 in file convertF2CandC2F.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+MYCODE 00000000
+
+Symbol: MYCODE
+   Definitions
+      At line 33 in file convertF2CandC2F.s
+   Uses
+      None
+Comment: MYCODE unused
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 39 in file convertF2CandC2F.s
+   Uses
+      At line 26 in file convertF2CandC2F.s
+      At line 36 in file convertF2CandC2F.s
+
+2 symbols
+337 symbols in table

@@ -1,0 +1,178 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         ;The semicolon is used to lead an inline documentation.
+    3 00000000         ;This is the first ARM Assembly language program you see
+                        in the lab.
+    4 00000000         ;This program skeleton was from Dave Duguid and Trevor D
+                       ouglas in summer 2013.
+    5 00000000         ;When you write your program, you could have your info a
+                       t the top document block.
+    6 00000000         ;For Example:  Your Name, Student Number, what the progr
+                       am is for, and what it does etc.
+    7 00000000         
+    8 00000000         ;;; Directives
+    9 00000000                 PRESERVE8
+   10 00000000                 THUMB
+   11 00000000         
+   12 00000000         ; Vector Table Mapped to Address 0 at Reset
+   13 00000000         ; Linker requires __Vectors to be exported
+   14 00000000         
+   15 00000000                 AREA             RESET, DATA, READONLY
+   16 00000000                 EXPORT           __Vectors
+   17 00000000         
+   18 00000000         __Vectors
+   19 00000000 20001000        DCD              0x20001000  ; stack pointer val
+                                                            ue when stack is em
+                                                            pty
+   20 00000004         ;The processor uses a full descending stack. 
+   21 00000004         ;This means the stack pointer holds the address of the l
+                       ast 
+   22 00000004         ;stacked item in memory. When the processor pushes a new
+                        item 
+   23 00000004         ;onto the stack, it decrements the stack pointer and the
+                       n 
+   24 00000004         ;writes the item to the new memory location.
+   25 00000004         
+   26 00000004 00000000        DCD              Reset_Handler ; reset vector
+   27 00000008         
+   28 00000008                 ALIGN
+   29 00000008         
+   30 00000008         ; The program
+   31 00000008         ; Linker requires Reset_Handler
+   32 00000008         
+   33 00000008                 AREA             MYCODE, CODE, READONLY
+   34 00000000         
+   35 00000000                 ENTRY
+   36 00000000                 EXPORT           Reset_Handler
+   37 00000000         
+   38 00000000         
+   39 00000000         Reset_Handler
+   40 00000000         ;;;;;;;;;;User Code Starts from the next line;;;;;;;;;;;
+                       ;
+   41 00000000         
+   42 00000000 F04F 0201       MOV              R2, #0x01   ; R2 = 0x00000001
+   43 00000004 F04F 0302       MOV              R3, #0x02   ; R3 = 0x00000002
+   44 00000008         
+   45 00000008         ;Other examples to move immediate values
+   46 00000008 F243 2510       MOV              R5, #0x3210 ; R5 = 0x00003210
+   47 0000000C         
+   48 0000000C F2C7 6554       MOVT             R5,  #0x7654 ; R5 = 0x76543210
+   49 00000010         
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   50 00000010 F244 3621 
+              F2C8 7665        MOV32            R6,  #0x87654321 
+                                                            ; R6 = 0x87654321
+   51 00000018         
+   52 00000018 4F0D            LDR              R7, = 0x87654321 
+                                                            ; R7 = 0x87654321
+   53 0000001A         
+   54 0000001A         
+   55 0000001A EB02 0103       ADD              R1,R2,R3    ; R1 = 0x00000003
+   56 0000001E F64F 73FF 
+              F6CF 73FF        MOV32            R3,  #0xFFFFFFFF 
+                                                            ; R3 = 0xFFFFFFFF
+   57 00000026 18D1            ADDS             R1,R2,R3    ; R1 = ?   
+   58 00000028         ; specify Condition Code updates
+   59 00000028         
+   60 00000028 1AD1            SUBS             R1,R2,R3    ; R1 = 0x00000000
+   61 0000002A         ; Z = 1, C = 1
+   62 0000002A         
+   63 0000002A F04F 34FF       MOV              R4,  #0xFFFFFFFF 
+                                                            ; R4 = 0xFFFFFFFF
+   64 0000002E EB02 0104       ADD              R1,R2,R4    ; R1 = 0x00000000
+   65 00000032         ; Z= 0, C = 0
+   66 00000032         
+   67 00000032 1911            ADDS             R1,R2,R4    ; R1 = 0x00000000
+   68 00000034         ; Please specify Condition Code updates
+   69 00000034         ; Z = 1, C = 1
+   70 00000034         
+   71 00000034         
+   72 00000034 F04F 0202       MOV              R2, #0x00000002 
+                                                            ; R2 = 0x00000002
+   73 00000038 1911            ADDS             R1,R2,R4    ; R1 = 0x00000000
+   74 0000003A         ; Z = 0
+   75 0000003A         
+   76 0000003A F04F 0201       MOV              R2, #0x00000001 
+                                                            ; R2 = 0x00000001
+   77 0000003E F04F 0302       MOV              R3, #0x00000002 
+                                                            ; R3 = 0x00000002
+   78 00000042 18D1            ADDS             R1,R2,R3    ; R1 = 0x00000003
+   79 00000044         ; Add some small numbers again
+   80 00000044         ; C = 0
+   81 00000044         
+   82 00000044         ; Add numbers that will create an overflow
+   83 00000044 F06F 4200       MOV              R2,  #0x7FFFFFFF 
+                                                            ; R2 = 0x7FFFFFFF
+   84 00000048 F06F 4300       MOV              R3,  #0x7FFFFFFF 
+                                                            ; R3 = 0x7FFFFFFF
+   85 0000004C         
+   86 0000004C 18D1            ADDS             R1,R2,R3    ; R1 = 0xFFFFFFFE
+   87 0000004E         ; V = 1, N = 1
+   88 0000004E         
+   89 0000004E                 END                          ;End of the program
+                                                            
+              00 00 87654321 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\myfirstarm.d -o.\objects\myfirstarm.o -I\\Mac\Home\Docum
+ents\GitHub\CS-301\Labs\Lab5\RTE -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_DFP\2.1.0
+\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --pr
+edefine="__UVISION_VERSION SETA 521" --predefine="STM32F10X_MD_VL SETA 1" --lis
+t=.\listings\myfirstarm.lst MyFirstARM.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 15 in file MyFirstARM.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 18 in file MyFirstARM.s
+   Uses
+      At line 16 in file MyFirstARM.s
+Comment: __Vectors used once
+2 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+MYCODE 00000000
+
+Symbol: MYCODE
+   Definitions
+      At line 33 in file MyFirstARM.s
+   Uses
+      None
+Comment: MYCODE unused
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 39 in file MyFirstARM.s
+   Uses
+      At line 26 in file MyFirstARM.s
+      At line 36 in file MyFirstARM.s
+
+2 symbols
+339 symbols in table

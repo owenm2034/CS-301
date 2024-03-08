@@ -1,0 +1,285 @@
+
+
+
+ARM Macro Assembler    Page 1 
+
+
+    1 00000000         
+    2 00000000         ;The semicolon is used to lead an inline documentation.
+    3 00000000         ;This is the first ARM Assembly language program you see
+                        in the lab.
+    4 00000000         ;This program skeleton was from Dave Duguid and Trevor D
+                       ouglas in summer 2013.
+    5 00000000         ;When you write your program, you could have your info a
+                       t the top document block.
+    6 00000000         ;For Example:  Your Name, Student Number, what the progr
+                       am is for, and what it does etc.
+    7 00000000         
+    8 00000000         ;;; Directives
+    9 00000000                 PRESERVE8
+   10 00000000                 THUMB
+   11 00000000         
+   12 00000000         ; Vector Table Mapped to Address 0 at Reset
+   13 00000000         ; Linker requires __Vectors to be exported
+   14 00000000         
+   15 00000000                 AREA             RESET, DATA, READONLY
+   16 00000000                 EXPORT           __Vectors
+   17 00000000         
+   18 00000000         __Vectors
+   19 00000000 20001000        DCD              0x20001000  ; stack pointer val
+                                                            ue when stack is em
+                                                            pty
+   20 00000004         ;The processor uses a full descending stack. 
+   21 00000004         ;This means the stack pointer holds the address of the l
+                       ast 
+   22 00000004         ;stacked item in memory. When the processor pushes a new
+                        item 
+   23 00000004         ;onto the stack, it decrements the stack pointer and the
+                       n 
+   24 00000004         ;writes the item to the new memory location.
+   25 00000004         
+   26 00000004 00000000        DCD              Reset_Handler ; reset vector
+   27 00000008         
+   28 00000008                 ALIGN
+   29 00000008         
+   30 00000008         string1
+   31 00000008 41 52 4D 
+              20 61 73 
+              73 65 6D 
+              62 6C 79 
+              20 6C 61 
+              6E 67 75 
+              61 67 65 
+              20 69 73 
+              20 69 6D 
+              70 6F 72 
+              74 61 6E 
+              74 20 74 
+              6F 20 6C 
+              65 61 72 
+              6E 21 00         DCB              "ARM assembly language is impor
+tant to learn!",0
+   32 00000035         
+   33 00000035         
+   34 00000035         ; The program
+   35 00000035         ; Linker requires Reset_Handler
+
+
+
+ARM Macro Assembler    Page 2 
+
+
+   36 00000035         
+   37 00000035                 AREA             MYCODE, CODE, READONLY
+   38 00000000         
+   39 00000000                 ENTRY
+   40 00000000                 EXPORT           Reset_Handler
+   41 00000000         
+   42 00000000         
+   43 00000000         Reset_Handler
+   44 00000000         ;;;;;;;;;;User Code Starts from the next line;;;;;;;;;;;
+                       ;
+   45 00000000         
+   46 00000000         ; Put the string in the memory by using DCB.
+   47 00000000         ; Use R0 to hold the address of a character in the strin
+                       g.
+   48 00000000         ; Use R1 to be the counter for vowels.
+   49 00000000         ; Use R2 to be the counter for non-vowels.
+   50 00000000         ; Count how many vowels and how many non-vowels are in t
+                       he following string
+   51 00000000         ; "ARM assembly language is important to learn!",0
+   52 00000000         
+   53 00000000 F04F 0100       MOV              R1, #0      ; Initialize vowel 
+                                                            count to 0
+   54 00000004 F04F 0200       MOV              R2, #0      ; Initialize non-vo
+                                                            wel count to 0
+   55 00000008 4B10            LDR              R3, = string1 ; Load the addres
+                                                            s of string1 into t
+                                                            he register R3
+   56 0000000A         
+   57 0000000A         vowel_or_consonant
+   58 0000000A         
+   59 0000000A 7818            LDRB             R0, [R3]    ; Load the characte
+                                                            r from string1
+   60 0000000C         
+   61 0000000C 2800            CMP              R0, #0      ; check if value is
+                                                             0
+   62 0000000E D01C            beq              count_done  ; null terminated, 
+                                                            exit
+   63 00000010         
+   64 00000010         ; uppercase
+   65 00000010 2841            cmp              R0, #'A'    ; Compare with 'A'
+   66 00000012 D017            beq              is_vowel    ; If equal to 'A', 
+                                                            it's a vowel
+   67 00000014 2845            cmp              R0, #'E'    ; Compare with 'E'
+   68 00000016 D015            beq              is_vowel    ; If equal to 'E', 
+                                                            it's a vowel
+   69 00000018 2849            cmp              R0, #'I'    ; Compare with 'I'
+   70 0000001A D013            beq              is_vowel    ; If equal to 'I', 
+                                                            it's a vowel
+   71 0000001C 284F            cmp              R0, #'O'    ; Compare with 'O'
+   72 0000001E D011            beq              is_vowel    ; If equal to 'O', 
+                                                            it's a vowel
+   73 00000020 2855            cmp              R0, #'U'    ; Compare with 'U'
+   74 00000022         
+   75 00000022         ; lowercase
+   76 00000022 2861            cmp              R0, #'a'    ; Compare with 'a'
+   77 00000024 D00E            beq              is_vowel    ; If equal to 'a', 
+                                                            it's a vowel
+   78 00000026 2865            cmp              R0, #'e'    ; Compare with 'e'
+   79 00000028 D00C            beq              is_vowel    ; If equal to 'e', 
+
+
+
+ARM Macro Assembler    Page 3 
+
+
+                                                            it's a vowel
+   80 0000002A 2869            cmp              R0, #'i'    ; Compare with 'i'
+   81 0000002C D00A            beq              is_vowel    ; If equal to 'i', 
+                                                            it's a vowel
+   82 0000002E 286F            cmp              R0, #'o'    ; Compare with 'o'
+   83 00000030 D008            beq              is_vowel    ; If equal to 'o', 
+                                                            it's a vowel
+   84 00000032 2875            cmp              R0, #'u'    ; Compare with 'u'
+   85 00000034 D006            beq              is_vowel    ; If equal to 'u', 
+                                                            it's a vowel
+   86 00000036         
+   87 00000036 E002            B                not_vowel
+   88 00000038         
+   89 00000038         increment_char
+   90 00000038 F103 0301       ADD              R3, #1      ; increment index t
+                                                            o the next characte
+                                                            r
+   91 0000003C E7E5            B                vowel_or_consonant
+   92 0000003E         
+   93 0000003E         not_vowel
+   94 0000003E F102 0201       ADD              R2, #1
+   95 00000042 E7F9            B                increment_char
+   96 00000044         
+   97 00000044         is_vowel
+   98 00000044 F101 0101       ADD              R1, #1
+   99 00000048 E7F6            B                increment_char
+  100 0000004A         
+  101 0000004A         count_done
+  102 0000004A         
+  103 0000004A                 END                          ;End of the program
+                                                            
+              00 00 00000000 
+Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M3 --apcs=interw
+ork --depend=.\objects\countvowelsone.d -o.\objects\countvowelsone.o -I\\Mac\Ho
+me\Documents\GitHub\CS-301\Labs\Lab7\RTE -IC:\Keil_v5\ARM\PACK\Keil\STM32F1xx_D
+FP\2.1.0\Device\Include -IC:\Keil_v5\ARM\CMSIS\Include --predefine="__EVAL SETA
+ 1" --predefine="__UVISION_VERSION SETA 521" --predefine="STM32F10X_MD_VL SETA 
+1" --list=.\listings\countvowelsone.lst CountVowelsOne.s
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+RESET 00000000
+
+Symbol: RESET
+   Definitions
+      At line 15 in file CountVowelsOne.s
+   Uses
+      None
+Comment: RESET unused
+__Vectors 00000000
+
+Symbol: __Vectors
+   Definitions
+      At line 18 in file CountVowelsOne.s
+   Uses
+      At line 16 in file CountVowelsOne.s
+Comment: __Vectors used once
+string1 00000008
+
+Symbol: string1
+   Definitions
+      At line 30 in file CountVowelsOne.s
+   Uses
+      At line 55 in file CountVowelsOne.s
+Comment: string1 used once
+3 symbols
+
+
+
+ARM Macro Assembler    Page 1 Alphabetic symbol ordering
+Relocatable symbols
+
+MYCODE 00000000
+
+Symbol: MYCODE
+   Definitions
+      At line 37 in file CountVowelsOne.s
+   Uses
+      None
+Comment: MYCODE unused
+Reset_Handler 00000000
+
+Symbol: Reset_Handler
+   Definitions
+      At line 43 in file CountVowelsOne.s
+   Uses
+      At line 26 in file CountVowelsOne.s
+      At line 40 in file CountVowelsOne.s
+
+count_done 0000004A
+
+Symbol: count_done
+   Definitions
+      At line 101 in file CountVowelsOne.s
+   Uses
+      At line 62 in file CountVowelsOne.s
+Comment: count_done used once
+increment_char 00000038
+
+Symbol: increment_char
+   Definitions
+      At line 89 in file CountVowelsOne.s
+   Uses
+      At line 95 in file CountVowelsOne.s
+      At line 99 in file CountVowelsOne.s
+
+is_vowel 00000044
+
+Symbol: is_vowel
+   Definitions
+      At line 97 in file CountVowelsOne.s
+   Uses
+      At line 66 in file CountVowelsOne.s
+      At line 68 in file CountVowelsOne.s
+      At line 70 in file CountVowelsOne.s
+      At line 72 in file CountVowelsOne.s
+      At line 77 in file CountVowelsOne.s
+      At line 79 in file CountVowelsOne.s
+      At line 81 in file CountVowelsOne.s
+      At line 83 in file CountVowelsOne.s
+      At line 85 in file CountVowelsOne.s
+
+not_vowel 0000003E
+
+Symbol: not_vowel
+   Definitions
+      At line 93 in file CountVowelsOne.s
+   Uses
+      At line 87 in file CountVowelsOne.s
+Comment: not_vowel used once
+vowel_or_consonant 0000000A
+
+
+
+ARM Macro Assembler    Page 2 Alphabetic symbol ordering
+Relocatable symbols
+
+
+Symbol: vowel_or_consonant
+   Definitions
+      At line 57 in file CountVowelsOne.s
+   Uses
+      At line 91 in file CountVowelsOne.s
+Comment: vowel_or_consonant used once
+7 symbols
+345 symbols in table

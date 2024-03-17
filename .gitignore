@@ -1,1 +1,10 @@
 *.DS_Store
+*.aux
+*.uvoptx
+*.uvprojx
+*.uvguix.owenm
+*.gz
+*.log
+Objects*
+Listings*
+DebugConfig*

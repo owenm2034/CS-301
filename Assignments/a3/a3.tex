@@ -1,0 +1,78 @@
+\documentclass{article}
+
+\begin{document}
+
+\title{CS 301 Assignment 3\\[0.5cm]\large Student ID: 200482797}
+\author{Owen Monus}
+\date{March 16th, 2024}
+
+\maketitle
+
+\begin{enumerate}
+    \item
+    \begin{enumerate}
+        \item Represent the following decimal numbers in twos complement using 16 bits: +512, -29.
+        \newline
+        512 → 0000001000000000
+        \newline
+        -29 → 1111111111100011
+        \item Represent the following twos complement values in decimal:
+        \newline 
+        1101011 → -21
+        \newline
+        0101101 → 45
+    \end{enumerate}
+    
+    \item
+    \begin{enumerate}
+        \item The $r$'s complement of an $n$-digit number $N$ in base $r$ is defined as $r^n - N$ for $N \neq 0$ and $0$ for $N = 0$. Find the tens complement of the decimal number $13,250$.
+        \paragraph{} 13,250's 10's complement is 86,750. This was obtained by taking the 9's complement and adding one.
+        
+        \item Calculate (72530-13250) using tens complement arithmetic. Assume that the rules are
+        similar to those for twos complement arithmetic.
+        \item Take 10s comp of 13250, subtract that from 72530. This gives 159280. Discard leading 1, gives 59280
+    \end{enumerate}
+
+    \pagebreak
+    \item Use the Booth's algorithm to multiply 23 (multiplicand) by 29 (multiplier), where each
+    number is represented using 6 bits.
+    \begin{verbatim}
+// Booth's Algorithm with M = 23, N = 29
+A = 0
+B = 010111 // 23
+C = 011101 // 29
+C_-1 = 0
+n = 6
+
+while(n > 0) {
+    if (LSB(C) == 0 && C_-1 == 1)
+        A = A + B
+    if (LSB(C) == 1 && C_-1 == 0)
+        A = A - B
+    
+    n = n - 1
+    A||C||C_-1 = (A||C||C_-1) <<< 1 
+}
+    \end{verbatim}
+    \pagebreak
+
+    \item
+    \begin{table}[htbp]
+        \centering
+        % \renewcommand{\arraystretch}{2}
+        \caption{Booth's Algorithm: \(23 \times 29\)}
+        \begin{tabular}{c|c|c|c|c}
+            n & A & C & C\(_{-1}\) & B \\
+            \hline
+            6\(_{10}\) & 000000 & 011101 & 000000 & 010111 \\
+            5\(_{10}\) & 000000 & 111010 & 000000 & 101110 \\
+            4\(_{10}\) & 000000 & 111010 & 000000 & 101110 \\
+            % Step 2 & ... & ... & ... \\
+        \end{tabular}
+    \end{table}
+    
+    \item 
+
+\end{enumerate}
+
+\end{document}

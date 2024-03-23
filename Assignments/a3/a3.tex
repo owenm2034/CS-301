@@ -26,11 +26,13 @@
     \item
     \begin{enumerate}
         \item The $r$'s complement of an $n$-digit number $N$ in base $r$ is defined as $r^n - N$ for $N \neq 0$ and $0$ for $N = 0$. Find the tens complement of the decimal number $13,250$.
-        \paragraph{} 13,250's 10's complement is 86,750. This was obtained by taking the 9's complement and adding one.
+        \paragraph{} 13,250's 10's complement is 86,750.
         
-        \item Calculate (72530-13250) using tens complement arithmetic. Assume that the rules are
+        \item Calculate \(72,530 - 13,250\) using tens complement arithmetic. Assume that the rules are
         similar to those for twos complement arithmetic.
-        \item Take 10s comp of 13250, subtract that from 72530. This gives 159280. Discard leading 1, gives 59280
+        \paragraph{} Take 10s comp of 13250, add that to 72530.
+
+        \(72530+86750 = 159,280\)
     \end{enumerate}
 
     \pagebreak
@@ -51,27 +53,120 @@ while(n > 0) {
         A = A - B
     
     n = n - 1
-    A||C||C_-1 = (A||C||C_-1) <<< 1 
+    A||C||C_-1 = (A||C||C_-1) >>> 1 
 }
     \end{verbatim}
-    \pagebreak
-
-    \item
     \begin{table}[htbp]
         \centering
         % \renewcommand{\arraystretch}{2}
         \caption{Booth's Algorithm: \(23 \times 29\)}
-        \begin{tabular}{c|c|c|c|c}
-            n & A & C & C\(_{-1}\) & B \\
+        \begin{tabular}{c|c|c|c|c|c}
             \hline
-            6\(_{10}\) & 000000 & 011101 & 000000 & 010111 \\
-            5\(_{10}\) & 000000 & 111010 & 000000 & 101110 \\
-            4\(_{10}\) & 000000 & 111010 & 000000 & 101110 \\
+            Operation & n & A & C & C\(_{-1}\) & B \\
+            \hline
+            initial value & 6\(_{10}\) & 000000 & 011101 & 0 & 010111 \\
+            \(A = A - B\) & 6\(_{10}\) & 101001 & 011101 & 0 & 010111 \\
+            right shift & 6\(_{10}\) & 110100 & 101110 & 1 & 010111 \\
+            \(A = A + B \) & 5\(_{10}\) & 001011 & 101110 & 1 & 010111 \\
+            right shift & 5\(_{10}\) & 000101 & 110111 & 0 & 010111 \\
+            \(A = A - B\) & 4\(_{10}\) & 101110 & 110111 & 0 & 010111 \\
+            right shift & 4\(_{10}\) & 110111 & 011011 & 1 & 010111 \\
+            right shift & 3\(_{10}\) & 111011 & 101101 & 1 & 010111 \\
+            right shift & 2\(_{10}\) & 111101 & 110110 & 1 & 010111 \\
+            \(A = A + B\) & 1\(_{10}\) & 010100 & 110110 & 1 & 010111 \\
+            right shift & 1\(_{10}\) & 001010 & 011011 & 0 & 010111 \\
             % Step 2 & ... & ... & ... \\
         \end{tabular}
+        \newline
+        \newline Result = 0b001010011011 \( = 667_{10}\)
     \end{table}
-    
+
+    \pagebreak
     \item 
+    \begin{verbatim}
+// One instruction machine
+LOAD E
+MUL F
+STORE T
+LOAD D
+SUB T
+STORE X
+LOAD B
+MUL C
+ADD A
+DIV X
+STORE X
+
+// Two instruction machine
+MOVE X,F
+MUL X,E
+MOVE T,D
+SUB T,X
+
+MOVE X,C
+MUL X,B
+ADD X,A
+DIV X,T
+
+// Three instruction machine
+MUL T,E,F
+SUB T,D,T
+MUL X,B,C
+ADD X,X,A
+DIV X,X,T
+    \end{verbatim}
+
+    \pagebreak
+    \item Both an arithmetic left shift and a logical left shift
+    correspond to a multiplication by 2 when there is no overflow. If overflow occurs, arithmetic and logical
+    left shift operations produce different results, but the arithmetic left shift retains the sign of the
+    number.
+    \begin{table}[htbp]
+        \centering
+        \caption{Shifts for Decimal Numbers}
+        \begin{tabular}{c|c|c|c|c}
+        \hline
+        $d$ & $2$'s & LLS & ALS & Condition \\
+        \hline
+        -16 & 10000 & 00000 & 10000 & overflow \\
+        -15 & 10001 & 00001 & 10010 & overflow \\
+        -14 & 10010 & 00100 & 10100 & overflow \\
+        -13 & 10011 & 00011 & 10110 & overflow \\
+        -12 & 10100 & 01000 & 11000 & overflow \\
+        -11 & 10101 & 01010 & 11010 & overflow \\
+        -10 & 10110 & 01100 & 11100 & overflow \\
+        -9 & 10111 & 01110 & 11110 & overflow \\
+        -8 & 11000 & 10000 & 10000 & \shortstack{no overflow} \\
+        -7 & 11001 & 10010 & 10010 & \shortstack{no overflow} \\
+        -6 & 11010 & 10100 & 10100 & \shortstack{no overflow} \\
+        -5 & 11011 & 10110 & 10110 & \shortstack{no overflow} \\
+        -4 & 11100 & 11000 & 11000 & \shortstack{no overflow} \\
+        -3 & 11101 & 11010 & 11010 & \shortstack{no overflow} \\
+        -2 & 11110 & 11100 & 11100 & \shortstack{no overflow} \\
+        -1 & 11111 & 11110 & 11110 & \shortstack{no overflow} \\
+        0 & 00000 & 00000 & 00000 & \shortstack{no overflow} \\
+        1 & 00001 & 00010 & 00010 & \shortstack{no overflow} \\
+        2 & 00010 & 00100 & 00100 & \shortstack{no overflow} \\
+        3 & 00011 & 00110 & 00110 & \shortstack{no overflow} \\
+        4 & 00100 & 01000 & 01000 & \shortstack{no overflow} \\
+        5 & 00101 & 01010 & 01010 & \shortstack{no overflow} \\
+        6 & 00110 & 01100 & 01100 & \shortstack{no overflow} \\
+        7 & 00111 & 01110 & 01110 & \shortstack{no overflow} \\
+        8 & 01000 & 10000 & 00000 & overflow \\
+        9 & 01001 & 10010 & 00010 & overflow \\
+        10 & 01010 & 10100 & 00100 & overflow \\
+        11 & 01011 & 10110 & 00110 & overflow \\
+        12 & 01100 & 11000 & 01000 & overflow \\
+        13 & 01101 & 11010 & 01010 & overflow \\
+        14 & 01110 & 11100 & 01100 & overflow \\
+        15 & 01111 & 11110 & 01110 & overflow \\
+        \end{tabular}
+        \label{tab:shifts}
+        \end{table}
+        \paragraph{} As shown in the table, when an operation results in overflow, the Arithmetic Left
+        Shift and Logical Left Shift result in different results. The Arithmetic Left Shift retains 
+        the sign of the number, whereas the Logical Left Shift does not.
+        
 
 \end{enumerate}
 

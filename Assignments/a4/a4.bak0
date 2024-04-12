@@ -1,0 +1,149 @@
+\documentclass{article}
+
+\begin{document}
+
+\title{CS 301 Assignment 4\\[0.5cm]\large Student ID: 200482797}
+\author{Owen Monus}
+\date{April 10th, 2024}
+
+\maketitle
+
+\begin{enumerate}
+    \item
+    \begin{enumerate}
+        \item You are given an one-address machine with an accumulator and the following memory
+        values:
+        \newline Word 20 contains 40.
+        \newline Word 30 contains 50.
+        \newline Word 40 contains 60.
+        \newline Word 50 contains 70
+        \newline 
+        \newline
+        What values do the following instructions load into the accumulator?
+        \begin{enumerate}
+            \item LOAD IMMEDIATE 20
+            \newline This loads 20 into the accumulator
+            
+            \item LOAD DIRECT 20
+            \newline This loads 40 into the accumulator
+            
+            \item LOAD INDIRECT 20
+            \newline This loads 60 into the accumulator
+            
+            \item LOAD IMMEDIATE 30
+            \newline This loads 30 into the accumulator
+            
+            \item LOAD DIRECT 30
+            \newline This loads 50 into the accumulator
+            
+        \end{enumerate}
+        
+        \item An address field in an instruction contains a decimal value 14. Where is the corresponding
+        operand located for\dots
+        \begin{enumerate}
+            \item Immediate addressing?
+            \newline The operand is in the instruction
+
+            \item Direct addressing?
+            \newline The operand is in address 14
+
+            \item Indirect addressing?
+            \newline The operand is pointed to by the address contained in address 14 
+
+            \item Register addressing?
+            \newline The operand is in register 14
+
+            \item Register indirect addressing?
+            \newline The operand is pointed to by the address contained in register 14
+        \end{enumerate}
+    \end{enumerate}
+    
+    \item Let the address stored in the program counter (PC) be designated by the symbol X1. The
+    instruction stored in X1 has an address part (operand reference) X2. The operand needed to execute the
+    instruction is stored in the memory word with address X3. An index register contains the value X4. What
+    is the relationship between these various quantities if the addressing mode of the instruction is (a)
+    direct; (b) indirect; (c) PC relative; (d) indexed?
+
+    \item 
+    \begin{enumerate}
+        \item A PC-relative mode branch instruction is 3 bytes long. The address of the instruction, in
+        decimal, is 256028. Determine the branch target address if the signed displacement in the instruction is
+        -31.
+        \item A PC-relative mode branch instruction is stored in memory at address 62010. The branch is
+    made to location 53010. The address field in the instruction is 10 bits long. What is the binary value in the
+    instruction? Note that (x)10 indicates that x is a decimal number.
+    \end{enumerate}
+
+    \item 
+    \begin{enumerate}
+        \item If the last operation performed on a computer with an 8-bit word was an addition in
+        which the two operands were 00000010 and 00000011, what would be the value of the following flags?
+        \begin{enumerate}
+            \item Overflow
+            \item SIgn
+        \end{enumerate}
+        
+        \item If the last operation performed on a computer with an 8-bit word was a subtraction in
+        which the two operands were 11110000 and 0010100 (i.e., 11110000 – 00010100 was performed), what
+        would be the value of the following flags?
+        \begin{enumerate}
+            \item Carry
+            \item Zero
+            \item Overflow
+        \end{enumerate}
+
+        \item A pipelined processor has a clock rate of 2.5 GHz and executes a program with 1.5 million
+        instructions. The pipeline has five stages, and instructions are issued at a rate of one per clock cycle.
+        Ignore penalties due to branch instructions and out-of-sequence executions. What is the speedup of
+        this processor for this program compared to a nonpipelined processor? You can assume that (a) each
+        instruction goes through all five stages of the pipeline; (b) the five stages are of equal duration; (c) all of
+        the stages can be performed in parallel; and (d) there are no conditional branch instructions.
+    \end{enumerate}
+
+    \item Write a summary of what you have learned in this course in about 1000 words.
+    \paragraph{} A digital system consists of two notions: architecture and organization. 
+    Architecture refers to the attributes of the system visible to a programmer. These include: instruction set, data types, memory
+    addressing mode, and I/O mechanisms. Organization refers to the operational units and their
+    interconnections. Organizational attributes involve control signals, interfaces, etc.
+    
+    \paragraph{} We describe a computer as a hierarchical system. Structure refers to the way in which the 
+    components are interrelated. We describe structure for a single processor computer and a multicore computer.
+    Function refers to the operation of each individual component as part of the structure. There
+    are four basic functions that a computer can perform: data processing, data storage, data movement,
+    and control.
+
+    \paragraph{} To improve speed, some techniques are in the following. Pipelining
+    enables a processor to work simultaneously on multiple instructions by performing a different stage for
+    each of the multiple instructions at the same time. Branch prediction: The processor predicts which instructions are likely to be
+    processed next, and it pre-fetches the instructions so that the processor is kept busy.
+    Superscalar execution: the ability to issue more than one instruction in every processor
+    clock cycle. Data flow analysis: The processor analyzes which instructions are dependent on each other’s
+    results, to create an optimized schedule of instructions.
+    Speculative execution: Using branch prediction and data flow analysis, some processors
+    speculatively execute instructions ahead of their actual appearance in the program. This enables the
+    processor to keep its execution engines as busy as possible.
+
+    \paragraph{} The use of multiple processors on a same chip is called multicore.
+    -Multicore provides the potential to increase performance without increasing the clock rate.
+    -Cache memory can be shared among processors in multicore. Cache memory can also be placed in the
+    same chip. When cache memory is larger, there can be multiple levels of cache.
+    -Within a processor, the increase in performance is roughly proportional to the square root of the
+    increase in complexity.
+
+    \paragraph{} The basic function of a computer is to execute programs, which is achieved by interconnecting CPU,
+    memory, and I/O components. Interconnection can be bus interconnection or point-to-point
+    interconnection. The processing required for a single instruction is called an instruction cycle. Two steps of an instruction
+    cycle are the fetch cycle and the execute cycle. At the beginning of each instruction cycle, the processor fetches an instruction from memory. In a
+    typical processor, a register called the program counter (PC) holds the address of the instruction to be
+    fetched next. Unless told otherwise, the processor always increments the PC after each instruction fetch
+    so that it will fetch the next instruction in sequence. The fetched instruction is loaded into a register in the processor known as the instruction register (IR).
+    The instruction contains bits that specify the action the processor is to take. The processor interprets the
+    instruction and performs the required action. In general, these actions fall into four categories.
+    Processor-memory (load and store), Processor-I/O Data processing. Control.
+
+    \paragraph{} There are two main types of interconnection structures. Bus, and point to point. Both have
+    their upsides and downsides
+
+\end{enumerate}
+
+\end{document}

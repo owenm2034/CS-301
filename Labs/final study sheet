@@ -1,0 +1,168 @@
+comp org - operational units and their interconnections
+
+comp arch - attribites visible to a programmer
+            - registers
+            - inst set
+            - data types
+            - mem addressing
+            - i/o mechanisms
+
+Structure - the way computer components are related
+
+function - operation of each component as part of a structure
+
+4 functions of a computer
+    - data processing
+    - data storage
+    - data movement
+    - control
+
+Main components of a computer
+    - interconnection
+    - cpu
+    - memory
+    - i/o
+
+structure of a processor
+    - registers
+    - ALU
+    - control unit
+    - interconnection
+
+multicore
+    - a computer with multiple processing units, where all these processor units reside on a single chip, is called a multicore computer
+
+IAS
+    - word is 40 bits
+    - instruction is 20 bits
+    - I_c 21
+    - 4096 words of memory
+
+Overflow
+    - if two numbers with the same sign (both positive or both negative) are added, then overflow occurs if and only if the result has the opposite sign.
+
+
+Fetch/Excecute Cycle
+    - Instruction address calculation (iac): Determine the address of the instruction that is to be executed.
+    - Instruction fetch (if): Transfer the instruction from memory to IR.
+    - Instruction operation decoding (iod): Analyze instruction to determine type of operation that is to be performed.
+    - Operand address calculation (oac): The address of operand is determined. There may be more than one operand.
+    - Operand fetch (of): Transfer the operand from memory (or from I/O).
+    - Data operation (do): Perform the operation.
+    - Operand store (os): Transfer the result to memory or to I/O
+
+Performance:
+    - Pipelining: Excecute an instruction in multiple steps to allow the processor to work on multiple instructions simultaneously, keeping the CPU utilized
+    - Branch Prediction: Pre fetch instructions for the branch determined the most likely outcome
+    - Superscalar Excecution: excecute more that one insturction per cycle
+    - Data flow analysis: analyze which instructions are dependent on each other's results, to create an optimized schedule of instructions
+    - Speculative excecution:  Use branch prediction and data flow analysis to speculatively execute instructions ahead of their appearance in the program
+
+    - RC Delay: As components decrease in size, wires become thinner, resistance increases. As wires become closer together, capacitance increases
+        - as rc inc, delay inc
+
+    - Performance balance: an increase in performance to one part of the system does not result in an increase in performance in the rest of the system
+
+    - Amdahl's Law: models the amount of speedup gained by using multiple cores to run a program
+
+    - Speedup:
+        - when amount of paralellizable instructions are low, paralell processors have little effect
+        - diminishing returns for using multiple processors
+        - software needs to be adapted to paralell processing for the most benefit of paralell processing
+
+as clock speed and logic density increase, a number of obstacles become more significant:
+    - Power use
+    - RC delay
+    - Mem latency/throughput
+
+basic function of a computer: execution of a program stored in memory
+
+Basic instruction function
+    - processor - mem
+    - proc - i/o
+    - data processing
+    - control
+
+Hit ratio: the probability that a requested peice of data is in cache
+
+Principle of locality: the tendency for memory to cluster
+    - a program accesses memory non uniformly
+    - the probability that a given unit of memory os referenced tends to change slowly as a function of time
+    - correlation between immediate past and immediate future memory reference patterns is high
+
+spatial locality: tendency that a program references units of memory whose addresses are near to each other
+
+temporal locality: tendency that a program references memory units in the near future, those were referenced by the program in the recent past
+
+Location: internal or external
+Capacity: the amount it can hold, expressed in bits or words
+Unit of transfer: the amount of bits that can be read or written at a single time
+Method of access:
+    - sequential
+    - direct
+    - random
+    - asssociative
+Performance: access time, memory cycle time, transfer rate
+
+Physical characteristics: volatile or non volatile
+
+Organization: physical arrangment of bits to form words
+
+four level memory hierarchy model:
+    - on chip
+    - inboard
+    - outboard
+    - offline
+
+twos complement representation of integer numbers:
+    - a way to represent negative numbers in binary. First bit indicates sign
+
+typical elements of a machine instruction:
+    - opcode
+    - source operand
+    - destination operand
+    - next instruction
+
+four areas source and destination operands can be found:
+    - main memory,
+    - register,
+    - immediate values,
+    - I/O device.
+
+if an inst has 4 addresses, what are they for?
+    - two operands,
+    - one result,
+    - address of the next instruction.
+
+five important instruction set design issues:
+    - Operation selection: How many and which operations to provide, and how complex operations should be.
+    - Data types: The various types of data upon which operations are performed.
+    - Addressing mode: The mode or modes by which the address of an operand is specified.
+    - Instruction format: Instruction length, number of addresses, size of various fields, and so on.
+    - Registers: Number of processor registers that can be referenced by instructions, and their use.
+
+types of operands:
+    - addresses,
+    - numbers,
+    - characters,
+    - logical data
+
+difference between an arithmetic shift and a logical shift?
+    - arithmetic shift is sign sensitive
+    - logical shift dont care about sign
+
+direct addressing: get value at address
+indirect addressing: get value at address at address
+register addressing: by register number
+register indirect addressing: get value at register at register
+displacement addressing:
+    - relative addressing: offset from pc
+    - Base-Register Addressing: register field has mem address, address field contains displacement from address,
+    - Indexing: add a value in the index register to the provided address
+
+What is the difference between postindexing and preindexing?
+    - post index, add the value after
+    - pre index, add the value before
+
+general roles performed by processor registers:
+    - 
